@@ -28,17 +28,6 @@ title varchar(40),
 release_date date,
 Primary key (album_id)
 );
-Create Table song(
-song_id varchar(40),
-title varchar(40),
-artist_id varchar(40),
-duration int,
-release_date date,
-album_id varchar(40),
-Primary key (song_id),
-Foreign key (artist_id) References artist(artist_id),
-Foreign key (album_id) References album(album_id)
-);
 Create table journal(
 user_id int Not Null,
 journal_entry text,
@@ -65,7 +54,7 @@ Create table song(
 song_id varchar(40) Not Null,
 song_title varchar(255),
 artist_id varchar(40),
-duartion time,
+duration time,
 release_date date,
 album_id varchar(40),
 Primary key (song_id),
