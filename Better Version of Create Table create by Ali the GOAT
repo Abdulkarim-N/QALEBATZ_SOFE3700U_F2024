@@ -1,0 +1,130 @@
+
+Create table genre(
+    genre_id VARCHAR(40) NOT NULL,
+    genre_name VARCHAR(255),
+    PRIMARY KEY (genre_id)
+);
+
+Create table album(
+    album_id VARCHAR(40),
+    album_title VARCHAR(255),
+    release_date DATE,
+    PRIMARY KEY (album_id)
+);
+
+Create table artist(
+    artist_id VARCHAR(40),
+    artist_name VARCHAR(50),
+    PRIMARY KEY (artist_id)
+);
+
+Create table subscription(
+    sub_id VARCHAR(40),
+    sub_type ENUM('free', 'premium', 'student'),
+    price DOUBLE,
+    duration DATETIME,
+    PRIMARY KEY (sub_id)
+);
+
+Create table Therapist(
+    license_no VARCHAR(40) NOT NULL,
+    username VARCHAR(24),
+    therapist_password VARCHAR(16) NOT NULL,
+    availability JSON,
+    PRIMARY KEY (license_no)
+);
+
+
+Create Table user(
+    user_id INT NOT NULL,
+    sub_type ENUM('free', 'premium', 'student'),
+    username VARCHAR(24),
+    email VARCHAR(40) NOT NULL,
+    sub_id VARCHAR(40),
+    user_password VARCHAR(16) NOT NULL,
+    t_license_no VARCHAR(40),
+    PRIMARY KEY (user_id),
+    FOREIGN KEY (sub_id) REFERENCES subscription(sub_id),
+    FOREIGN KEY (t_license_no) REFERENCES Therapist(license_no)
+);
+
+Create table playlist(
+    playlist_id VARCHAR(40),
+    user_id INT NOT NULL,
+    playlist_name VARCHAR(255),
+    is_public BOOLEAN,
+    PRIMARY KEY (playlist_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+);
+
+Create table journal(
+    user_id INT NOT NULL,
+    journal_entry TEXT,
+    journal_id VARCHAR(40) NOT NULL,
+    journal_date DATE,
+    t_license_no VARCHAR(40) NOT NULL,
+    PRIMARY KEY (journal_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (t_license_no) REFERENCES Therapist(license_no)
+);
+
+Create table song(
+    song_id VARCHAR(40) NOT NULL,
+    song_title VARCHAR(255),
+    artist_id VARCHAR(40),
+    duration TIME,
+    release_date DATE,
+    album_id VARCHAR(40),
+    PRIMARY KEY (song_id),
+    FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
+    FOREIGN KEY (album_id) REFERENCES album(album_id)
+);
+
+
+Create table user_playlist(
+    user_id INT,
+    song_id VARCHAR(40),
+    PRIMARY KEY (user_id, song_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (song_id) REFERENCES song(song_id)
+);
+
+Create table playlist_song(
+    playlist_id VARCHAR(40),
+    song_id VARCHAR(40),
+    PRIMARY KEY (playlist_id, song_id),
+    FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id),
+    FOREIGN KEY (song_id) REFERENCES song(song_id)
+);
+
+Create table artist_song(
+    artist_id VARCHAR(40),
+    song_id VARCHAR(40),
+    PRIMARY KEY (artist_id, song_id),
+    FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
+    FOREIGN KEY (song_id) REFERENCES song(song_id)
+);
+
+Create table artist_album(
+    artist_id VARCHAR(40),
+    album_id VARCHAR(40),
+    PRIMARY KEY (artist_id, album_id),
+    FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
+    FOREIGN KEY (album_id) REFERENCES album(album_id)
+);
+
+Create table song_genre(
+    song_id VARCHAR(40),
+    genre_id VARCHAR(40),
+    PRIMARY KEY (song_id, genre_id),
+    FOREIGN KEY (song_id) REFERENCES song(song_id),
+    FOREIGN KEY (genre_id) REFERENCES genre(genre_id)
+);
+
+Create table album_genre(
+    album_id VARCHAR(40),
+    genre_id VARCHAR(40),
+    PRIMARY KEY (album_id, genre_id),
+    FOREIGN KEY (album_id) REFERENCES album(album_id),
+    FOREIGN KEY (genre_id) REFERENCES genre(genre_id)
+);
