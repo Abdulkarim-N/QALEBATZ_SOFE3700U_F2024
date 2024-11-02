@@ -17,17 +17,6 @@ is_public boolean,
 Primary key (playlist_id),
 Foreign key (user_id) References user(user_id)
 );
-Create table artist(
-artist_id varchar(40),
-name varchar(40),
-Primary key (artist_id)
-);
-Create table album(
-album_id varchar(40),
-title varchar(40),
-release_date date,
-Primary key (album_id)
-);
 Create table journal(
 user_id int Not Null,
 journal_entry text,
