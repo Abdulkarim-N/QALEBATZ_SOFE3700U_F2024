@@ -1,0 +1,19 @@
+CREATE TABLE User(
+user_id int Not Null,
+username varchar(24),
+email varchar(40) Not Null,
+user_password varchar(16) Not Null,
+title enum('user', 'therapist') Not Null,
+profile_picture varchar(255),
+date_of_birth date,
+join_date datetime,
+subscription_level enum('free','premium','student','family'),
+music_preferences json,
+mental_health varchar(255),
+favourite_songs json,
+therapy_session int,
+therapist_license_number int Not Null,
+availability json,
+app_rating int,
+Primary key (user_id)
+);
