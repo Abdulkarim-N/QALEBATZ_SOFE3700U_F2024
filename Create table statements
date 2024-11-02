@@ -1,4 +1,4 @@
-CREATE TABLE User(
+Create Table User(
 user_id int Not Null,
 username varchar(24),
 email varchar(40) Not Null,
