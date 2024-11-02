@@ -6,7 +6,7 @@ email varchar(40) Not Null,
 sub_id varchar(40),
 user_password varchar(16) Not Null,
 t_license_no varchar(40),
-Primary key (user_id)
+Primary key (user_id),
 Foreign key (sub_id) References subscription(sub_id)
 );
 Create table playlist(
