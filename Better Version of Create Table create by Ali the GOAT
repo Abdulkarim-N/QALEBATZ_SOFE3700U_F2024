@@ -128,3 +128,11 @@ Create table album_genre(
     FOREIGN KEY (album_id) REFERENCES album(album_id),
     FOREIGN KEY (genre_id) REFERENCES genre(genre_id)
 );
+
+Create table artist_genre(
+	artist_id VARCHAR(40),
+    genre_id VARCHAR(40),
+    PRIMARY KEY (artist_id, genre_id),
+    FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
+    FOREIGN KEY (genre_id) REFERENCES genre(genre_id)
+)
