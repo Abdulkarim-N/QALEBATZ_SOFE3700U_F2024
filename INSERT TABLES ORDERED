@@ -120,3 +120,20 @@ INSERT INTO Album_Genre (album_id, genre_id) VALUES
 ('alb004', 'gen002'),
 ('alb005', 'gen005'),
 ('alb006', 'gen001');
+
+
+INSERT INTO Artist_Genre (artist_id, genre_id) VALUES
+('art001', 'gen001'), 
+('art002', 'gen003'), 
+('art003', 'gen001'), 
+('art004', 'gen002'), 
+('art005', 'gen005'), 
+('art006', 'gen001'), 
+
+
+('art001', 'gen002'), 
+('art003', 'gen006'), 
+('art004', 'gen004'),
+('art005', 'gen001'), 
+('art006', 'gen003'); 
+
