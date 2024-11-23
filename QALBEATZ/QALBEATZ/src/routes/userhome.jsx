@@ -29,7 +29,7 @@ export default function userHome() {
       ) : (
         <Section heading="I'm Just A Chill Guy">
           <MediaGrid
-            mediaPageRoute={routes.PLAYLIST}
+            mediaPageRoute={routes.USERPLAYLIST}
             media={chillPlaylists ? chillPlaylists.items : null}
           />
         </Section>

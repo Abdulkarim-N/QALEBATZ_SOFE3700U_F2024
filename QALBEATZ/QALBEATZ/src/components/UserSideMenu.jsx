@@ -1,5 +1,5 @@
 import SectionContainer from "./SectionContainer";
-import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { routes } from "../shared/routes";
 import SideMenuButton from "./Buttons/SideMenuButton";
 import { useLocation } from "react-router-dom";
@@ -11,9 +11,9 @@ const buttons = [
     href: routes.LOGGED,
   },
   {
-    icon: faSearch,
-    label: "Search",
-    href: routes.SEARCH,
+    icon: faBook,
+    label: "Journal List",
+    href: routes.LOGGED,
   },
 ];
 
