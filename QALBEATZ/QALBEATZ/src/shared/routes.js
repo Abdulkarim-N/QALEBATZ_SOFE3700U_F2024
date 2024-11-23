@@ -5,6 +5,7 @@ export const routes = {
   LOGIN: `${base}/login`,
   SEARCH: `${base}/`,
   PLAYLIST: `${base}/playlist`,
+  USERPLAYLIST: `${base}/user/playlist`,
   SIGNUP: `${base}/signup`,
   LOGGED: `${base}/user`,
   JOURNAL: `${base}/user/journal`,

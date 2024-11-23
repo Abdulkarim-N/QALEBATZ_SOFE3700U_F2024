@@ -18,7 +18,7 @@ export default function userHome() {
       ) : (
         <Section heading="Spotify Playlists">
           <MediaGrid
-            mediaPageRoute={routes.PLAYLIST}
+            mediaPageRoute={routes.USERPLAYLIST}
             media={featuredPlaylists ? featuredPlaylists.items : null}
           />
         </Section>
