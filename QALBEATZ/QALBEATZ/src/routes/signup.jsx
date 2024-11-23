@@ -32,9 +32,11 @@ export default function Signup() {
   const navigate = useNavigate();
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+  const [email, setemail] = useState("")
   const userinfo = {
     username: username,
-    password: password
+    password: password,
+    email: email
   };
   return (
     <div className="min-h-screen flex flex-col items-stretch font-body bg-black md:bg-gradient-to-b md:from-zinc-900 md:to-black">
@@ -74,10 +76,18 @@ export default function Signup() {
           }}
         >
           <FormInput
+          type="text"
+          id="email"
+          name="email"
+          hintText="Email"
+          setParentValue={setemail}
+          />
+
+          <FormInput
             type="text"
             id="username"
             name="username"
-            hintText="Email or username"
+            hintText="Username"
             setParentValue={setusername}
           />
 

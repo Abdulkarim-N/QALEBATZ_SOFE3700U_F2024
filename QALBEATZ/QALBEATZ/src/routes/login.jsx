@@ -86,7 +86,7 @@ export default function Login() {
             type="text"
             id="username"
             name="username"
-            hintText="Email or username"
+            hintText="Email or Username"
             setParentValue={setusername}
           />
 

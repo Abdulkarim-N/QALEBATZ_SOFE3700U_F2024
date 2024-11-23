@@ -18,7 +18,8 @@ db.connect((err) => {
     console.log('connected to sql server');
 })
 app.post('/signup', (req, res) => { //POST operations
-    const { username, password } = req.body.userinfo;
+    const { username, password, email } = req.body.userinfo;
+    console.log(email)
     let num = Math.floor(Math.random() * 1000);
     const currentDate = new Date();
     const year = currentDate.getFullYear();
