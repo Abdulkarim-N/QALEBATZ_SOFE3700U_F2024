@@ -14,7 +14,7 @@ export default function Navbar() {
       <ul role="menu" className="flex items-center gap-10">
         <li>
           <FlatButton
-            href="#"
+            href={routes.SIGNUP}
             className="text-neutral-400 hover:text-white font-bold hover:scale-105"
           >
             Sign up

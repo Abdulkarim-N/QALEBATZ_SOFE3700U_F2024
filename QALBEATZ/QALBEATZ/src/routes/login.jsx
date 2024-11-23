@@ -10,7 +10,8 @@ import PrimaryButton from "../components/Buttons/PrimaryButton";
 import Link from "../components/Link";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../shared/routes";
-
+import { useState } from 'react';
+import axios from 'axios';
 const authProviders = [
   {
     icon: faGoogle,
@@ -28,7 +29,25 @@ const authProviders = [
 
 export default function Login() {
   const navigate = useNavigate();
-
+  const [username, setusername] = useState("");
+  const [password, setpassword] = useState("");
+  const [response, setresponse] = useState("");
+  const userinfo = {
+    username: username,
+    password: password
+  };
+  const verify = (response) =>{
+    console.log(response.message);
+    if(response.message == 'Login successful!'){
+      console.log('umer is gay');
+      navigate(routes.LOGGED);
+      //route to loggin in page
+    }
+    else if(response.message == 'retrieval failed'){
+      console.log('umer is fag');
+      //route to idk
+    }
+  }
   return (
     <div className="min-h-screen flex flex-col items-stretch font-body bg-black md:bg-gradient-to-b md:from-zinc-900 md:to-black">
       <header className="py-12 md:py-8 px-8 md:px-12 md:mb-8 bg-black">
@@ -59,7 +78,8 @@ export default function Login() {
           className="flex flex-col gap-5 md:px-[5.5rem]"
           onSubmit={(e) => {
             e.preventDefault();
-            navigate(routes.HOME);
+            axios.post('http://localhost:3000/login',{userinfo}).then(response => (verify(response.data)))
+            .catch(err => console.log(err))
           }}
         >
           <FormInput
@@ -67,6 +87,7 @@ export default function Login() {
             id="username"
             name="username"
             hintText="Email or username"
+            setParentValue={setusername}
           />
 
           <FormInput
@@ -74,6 +95,7 @@ export default function Login() {
             id="password"
             name="password"
             hintText="Password"
+            setParentValue={setpassword}
           />
 
           <PrimaryButton type="submit" className="mt-5" style={{ color: "#a1051c" }}>
@@ -88,7 +110,7 @@ export default function Login() {
 
           <div className="flex flex-col gap-1 md:gap-2 md:flex-row">
             <p className="text-zinc-400">Don&apos;t have an account?</p>
-            <Link to="#" text="Sign up for QALBEATZ" />
+            <Link to={routes.SIGNUP} text="Sign up for QALBEATZ" />
           </div>
         </div>
       </main>
