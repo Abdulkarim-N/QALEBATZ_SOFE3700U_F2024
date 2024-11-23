@@ -34,7 +34,7 @@ export default function Navbar() {
         
         <li>
           <FlatButton
-            href={routes.SIGNUP}
+            href={routes.JOURNAL}
             className="text-neutral-400 hover:text-white font-bold hover:scale-105"
           >
             Journal
