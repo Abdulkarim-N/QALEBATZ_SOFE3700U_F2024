@@ -6,12 +6,16 @@ import { routes } from "../shared/routes";
 
 export default function JournalEntry() {
   const navigate = useNavigate();
+  const [journalTitle, setJournalTitle] = useState(""); // New state for journal title
   const [journalText, setJournalText] = useState("");
   const [entryDate, setEntryDate] = useState("");
+  const [mood, setMood] = useState(""); // State for mood
 
   const journalEntry = {
+    journalTitle,
     journalText,
     entryDate,
+    mood,
   };
 
   return (
@@ -39,6 +43,16 @@ export default function JournalEntry() {
               .catch(err => console.log(err));
           }}
         >
+          <label className="text-gray-400">Journal Title</label>
+          <input
+            type="text"
+            value={journalTitle}
+            onChange={(e) => setJournalTitle(e.target.value)}
+            placeholder="Enter your journal title"
+            className="p-2 border border-gray-300 rounded bg-black text-white"
+            required
+          />
+
           <label className="text-gray-400">Enter Date of Journal</label>
           <input
             type="date"
@@ -56,6 +70,19 @@ export default function JournalEntry() {
             className="p-2 border border-gray-300 rounded h-40 bg-black text-white"
             required
           />
+
+          <label className="text-gray-400">Mood</label>
+          <select
+            value={mood}
+            onChange={(e) => setMood(e.target.value)}
+            className="p-2 border border-gray-300 rounded bg-black text-white"
+            required
+          >
+            <option value="" disabled>Select your mood (1-10)</option>
+            {[...Array(10)].map((_, index) => (
+              <option key={index} value={index + 1}>{index + 1}</option>
+            ))}
+          </select>
 
           <PrimaryButton type="submit" className="mt-5" style={{ color: "#a1051c" }}>
             Save Entry
