@@ -28,6 +28,8 @@ export default function Stats() {
     }
   }, [journalData]); // Render chart when journalData is updated
 
+
+
   const renderChart = (data) => {
     const canvas = document.getElementById("journalMoodChart");
     if (!canvas) {
@@ -37,10 +39,12 @@ export default function Stats() {
 
     const ctx = canvas.getContext("2d");
 
+
     // Destroy existing chart instance if it exists
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
+
 
     // Prepare chart data
     const labels = data.map((entry) => {
