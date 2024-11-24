@@ -164,7 +164,9 @@ app.get('/journal', (req, res) => {
     });
 });
 app.get('/stats', (req, res) => {
+
     const sqlQuery = `SELECT * FROM journal ORDER BY journal_date`;
+
   
     db.query(sqlQuery, (err, result) => {
       if (err) {
