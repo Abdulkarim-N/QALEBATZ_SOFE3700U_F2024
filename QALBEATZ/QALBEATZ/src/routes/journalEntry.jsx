@@ -9,6 +9,7 @@ export const Usr_id = (userid) => {
   console.log(uid + 'in button file!')
 }
 
+
 export default function Journalist() {
   const { userid } = useParams(); // Retrieve the user ID from the route
   const [journalEntries, setJournalEntries] = useState([]);
@@ -36,23 +37,14 @@ export default function Journalist() {
     }
   }, [userid]); // Only triggers when `userid` changes
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <DotLoader />;
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div>
-      <h1>Journal Entries</h1>
-      {journalEntries.length > 0 ? (
-        <ul>
-          {journalEntries.map((entry, index) => (
-            <li key={index}>
-              <strong>{entry.journal_date}</strong>: {entry.journal_entry}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No journal entries found.</p>
-      )}
+    <div className="p-6 bg-neutral-900 text-white min-h-screen">
+      <div className="overflow-x-auto rounded-lg bg-neutral-900 shadow-md">
+        <JournalistTable articles={journalEntries} />
+      </div>
     </div>
   );
 }

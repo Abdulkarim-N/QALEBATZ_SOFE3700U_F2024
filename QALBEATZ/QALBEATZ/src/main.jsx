@@ -13,6 +13,7 @@ import Playlist from "./routes/playlist";
 import UserPlaylist from "./routes/userplaylist";
 import Journal from "./routes/journal";
 import JournalEntry from "./routes/journalEntry";
+import Stats from "./routes/stats";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,11 @@ const router = createBrowserRouter([
       {
         path: paths.JOURNALIST,
         element: <JournalEntry />
+      },
+
+      {
+        path: paths.STATS,
+        element: <Stats />
       }
     ],
   },

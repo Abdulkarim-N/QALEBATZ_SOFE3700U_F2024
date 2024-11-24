@@ -1,5 +1,5 @@
 import SectionContainer from "./SectionContainer";
-import { faAreaChart, faBook, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faHome, faAreaChart } from "@fortawesome/free-solid-svg-icons";
 import { paths, routes } from "../shared/routes";
 import SideMenuButton from "./Buttons/SideMenuButton";
 import { useLocation } from "react-router-dom";
@@ -13,6 +13,11 @@ let usid = '';
 export const usER_id = (userid) => {
   usid = userid
   console.log(usid + 'in button file')
+}
+let useid = '';
+export const uSER_id = (userid) => {
+  useid = userid
+  console.log(useid + 'in button file123')
 }
 export default function UserSideMenu() {
   const location = useLocation();
@@ -32,7 +37,7 @@ export default function UserSideMenu() {
     {
       icon: faAreaChart,
       label: "Statistics",
-      //href: `${paths.LOGGED.replace(":userid", usid)}/journalist`,
+      href: `${paths.STATS.replace(":userid", useid)}`,
 
     },
   ];

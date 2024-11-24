@@ -19,6 +19,8 @@ import {usER_id } from '../components/UserSideMenu';
 import {username_id} from '../routes/journal';
 import {usr_id} from '../routes/userhome';
 import {Usr_id} from '../routes/journalEntry';
+import {uSER_id} from '../components/UserSideMenu';
+
 
 
 const authProviders = [
@@ -55,6 +57,7 @@ export default function Login() {
         //localStorage.setItem('userid',userid);
         //user_id(userid)
         console.log(userid)
+        uSER_id(userid);
         Usr_id(userid);
         usER_id(userid);
         user_id(userid);
