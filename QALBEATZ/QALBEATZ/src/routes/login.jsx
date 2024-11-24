@@ -15,8 +15,11 @@ import axios from 'axios';
 import { user_id } from '../shared/routes';
 import { u_id } from '../components/UserNavbar';
 import {us_id } from '../components/UserSideMenu';
+import {usER_id } from '../components/UserSideMenu';
 import {username_id} from '../routes/journal';
 import {usr_id} from '../routes/userhome';
+import {Usr_id} from '../routes/journalEntry';
+
 
 const authProviders = [
   {
@@ -52,6 +55,8 @@ export default function Login() {
         //localStorage.setItem('userid',userid);
         //user_id(userid)
         console.log(userid)
+        Usr_id(userid);
+        usER_id(userid);
         user_id(userid);
         u_id(userid);
         us_id(userid);

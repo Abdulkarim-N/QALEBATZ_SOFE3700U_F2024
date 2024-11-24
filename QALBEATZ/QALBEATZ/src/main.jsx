@@ -12,6 +12,7 @@ import UserHome from "./routes/userhome";
 import Playlist from "./routes/playlist";
 import UserPlaylist from "./routes/userplaylist";
 import Journal from "./routes/journal";
+import JournalEntry from "./routes/journalEntry";
 
 const router = createBrowserRouter([
   {
@@ -22,10 +23,6 @@ const router = createBrowserRouter([
   {
     path: paths.SIGNUP,
     element: <Signup />,
-  },
-  {
-    path: paths.JOURNAL,
-    element: <Journal />,
   },
 
   {
@@ -41,9 +38,17 @@ const router = createBrowserRouter([
         path: paths.USERPLAYLIST,
         element: <UserPlaylist />,
       },
+
+      {
+        path: paths.JOURNALIST,
+        element: <JournalEntry />
+      }
     ],
   },
-  
+  {
+    path: paths.JOURNAL,
+    element: <Journal />,
+  },
   {
     path: paths.HOME,
     element: <Root />,

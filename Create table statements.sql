@@ -25,7 +25,7 @@ journal_date date,
 t_license_no varchar(40) Not Null,
 Primary key (journal_id),
 Foreign key (user_id) References user(user_id),
-Foreign key (t_license_no) References therapist(license_no)
+Foreign key (t_license_no) References Therapist(license_no)
 );
 Create table genre(
 genre_id varchar(40) Not Null,

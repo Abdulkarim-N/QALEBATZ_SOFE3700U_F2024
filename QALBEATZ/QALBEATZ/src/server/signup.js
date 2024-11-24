@@ -10,8 +10,8 @@ app.options('/', cors()); // Allow preflight requests
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'affan2003',
-    database: 'qalbeatz',
+    password: 'abdulkarim123',
+    database: 'dmsfinal',
 })
 db.connect((err) => {
     if (err) throw err;
@@ -128,6 +128,31 @@ app.get('/userid', (req, res) => {
         }
     })
 })
+
+app.get('/journal', (req, res) => {
+    const user_id = req.query.user_id; // Get user_id from query parameters
+
+    if (!user_id) {
+        return res.status(400).send({ message: "Missing user_id in query" });
+    }
+
+    const sql = `SELECT journal_entry, journal_date FROM journal WHERE user_id = ?`;
+
+    db.query(sql, [user_id], (err, results) => {
+        if (err) {
+            console.error("Error retrieving journal entries:", err);
+            return res.status(500).send({ message: "Failed to retrieve data" });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send({ message: "No journal entries found" });
+        }
+
+        res.status(200).json(results);
+    });
+});
+
+
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
