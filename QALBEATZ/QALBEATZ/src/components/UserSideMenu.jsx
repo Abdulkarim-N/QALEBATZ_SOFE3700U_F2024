@@ -1,5 +1,5 @@
 import SectionContainer from "./SectionContainer";
-import { faBook, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faAreaChart, faBook, faHome } from "@fortawesome/free-solid-svg-icons";
 import { paths, routes } from "../shared/routes";
 import SideMenuButton from "./Buttons/SideMenuButton";
 import { useLocation } from "react-router-dom";
@@ -27,6 +27,12 @@ export default function UserSideMenu() {
       icon: faBook,
       label: "Journal Entries",
       href: `${paths.LOGGED.replace(":userid", usid)}/journalist`,
+
+    },
+    {
+      icon: faAreaChart,
+      label: "Statistics",
+      //href: `${paths.LOGGED.replace(":userid", usid)}/journalist`,
 
     },
   ];
