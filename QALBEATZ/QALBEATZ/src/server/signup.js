@@ -164,16 +164,9 @@ app.get('/journal', (req, res) => {
     });
 });
 app.get('/stats', (req, res) => {
-    const sqlQuery = `
-      SELECT 
-        journal_id, 
-        journal_entry, 
-        journal_title, 
-        journal_date, 
-        journal_moods 
-      FROM journal 
-      ORDER BY journal_date;
-    `;
+
+    const sqlQuery = `SELECT * FROM journal ORDER BY journal_date`;
+
   
     db.query(sqlQuery, (err, result) => {
       if (err) {
