@@ -10,8 +10,8 @@ app.options('/', cors()); // Allow preflight requests
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'abdulkarim123',
-    database: 'dmsfinal',
+    password: 'affan2003',
+    database: 'qalbeatz',
 })
 db.connect((err) => {
     if (err) throw err;
