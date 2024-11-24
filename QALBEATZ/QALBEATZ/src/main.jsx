@@ -14,6 +14,7 @@ import UserPlaylist from "./routes/userplaylist";
 import Journal from "./routes/journal";
 import JournalEntry from "./routes/journalEntry";
 import Stats from "./routes/stats";
+import UserSpecificPlaylist from "./routes/userSpecificPlaylist";
 
 const router = createBrowserRouter([
   {
@@ -48,7 +49,11 @@ const router = createBrowserRouter([
       {
         path: paths.STATS,
         element: <Stats />
-      }
+      },
+      {
+        path: paths.USERSPECIFICPLAYLIST,
+        element: <UserSpecificPlaylist />
+      },
     ],
   },
   {
