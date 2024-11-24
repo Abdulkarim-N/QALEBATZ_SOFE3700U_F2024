@@ -1,4 +1,10 @@
-export default function JournalistTable({ articles = [] }) {
+export default function JournalistTable({ articles = [], handleupdate, handledelete }) {
+  /*const delete_row = (jid) =>{
+    console.log("del")
+    //articles = articles.filter(article => article.journal_id !== jid);
+    //setJournalEntries(updatedArticles); // Update the parent state
+  }*/
+ console.log(articles)
   return (
     <div className="overflow-x-auto rounded-lg bg-neutral-900 shadow-md">
       <table className="min-w-full table-auto text-left border-collapse">
@@ -35,12 +41,12 @@ export default function JournalistTable({ articles = [] }) {
                 </span>
               </td>
               <td className="px-4 py-3 text-center">
-                <button className="bg-neutral-800 text-gray-300 px-4 py-2 rounded-md hover:bg-neutral-700 focus:ring-2 focus:ring-neutral-500 focus:outline-none transition duration-300 ease-in-out shadow-sm">
+                <button onClick={() => handleupdate(article.journal_id)} id={'upd'+index}className="bg-neutral-800 text-gray-300 px-4 py-2 rounded-md hover:bg-neutral-700 focus:ring-2 focus:ring-neutral-500 focus:outline-none transition duration-300 ease-in-out shadow-sm">
                   Update
                 </button>
               </td>
               <td className="px-4 py-3 text-center">
-                <button className="bg-neutral-800 text-red-300 px-4 py-2 rounded-md hover:text-red-500 hover:bg-neutral-700 focus:ring-2 focus:ring-red-500 focus:outline-none transition duration-300 ease-in-out shadow-sm">
+                <button onClick={(e) => handledelete(index, e.target.id, articles[index].journal_id)}id={'del'+index}className="bg-neutral-800 text-red-300 px-4 py-2 rounded-md hover:text-red-500 hover:bg-neutral-700 focus:ring-2 focus:ring-red-500 focus:outline-none transition duration-300 ease-in-out shadow-sm">
                   Delete
                 </button>
               </td>

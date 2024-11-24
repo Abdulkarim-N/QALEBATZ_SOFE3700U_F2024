@@ -148,7 +148,7 @@ app.get('/journal', (req, res) => {
         return res.status(400).send({ message: "Missing user_id in query" });
     }
 
-    const sql = `SELECT journal_entry, journal_date FROM journal WHERE user_id = ?`;
+    const sql = `SELECT journal_entry, journal_date, journal_id FROM journal WHERE user_id = ?`;
 
     db.query(sql, [user_id], (err, results) => {
         if (err) {
@@ -175,7 +175,18 @@ app.get('/stats', (req, res) => {
       }
     });
   });
-  
+app.delete('/deljournal', (req, res) => {
+    const journal_id = req.query.jid;
+    console.log(journal_id)
+    const sql = `DELETE FROM journal WHERE journal_id = ?`;
+    db.query(sql, [journal_id], (err, result) => {
+        if (err) {
+            console.error("Error deleting data:", err);
+            return res.status(500).send({ message: "Deletion failed" });
+        }
+        res.status(200).send({ message: "Journal entry deleted successfully" });
+    });
+})
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
