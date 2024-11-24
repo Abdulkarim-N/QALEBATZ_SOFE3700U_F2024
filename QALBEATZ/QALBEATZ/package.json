@@ -17,6 +17,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "axios": "^1.7.7",
+    "chart.js": "^4.4.6",
     "express": "^4.21.1",
     "gh-pages": "^5.0.0",
     "localforage": "^1.10.0",
@@ -38,7 +39,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3",
-    "vite": "^4.4.5"
+    "vite": "^4.5.5"
   },
   "description": "## SCOPE This site features the following functionalities:",
   "main": "postcss.config.js",

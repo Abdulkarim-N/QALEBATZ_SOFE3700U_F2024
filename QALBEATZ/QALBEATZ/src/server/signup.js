@@ -10,8 +10,8 @@ app.options('/', cors()); // Allow preflight requests
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'Bumcheek$$12',
-    database: 'qalbeatz',
+    password: '12345',
+    database: 'proj',
 })
 db.connect((err) => {
     if (err) throw err;
@@ -128,7 +128,19 @@ app.get('/userid', (req, res) => {
         }
     })
 })
-
+app.post('/journalpost', (req, res) => {
+    const {journalTitle, journalText, entryDate, mood, userid} = req.body.journalEntry;
+    let jid = Math.floor(Math.random() * 1000);
+    const sql = `INSERT INTO journal (user_id, journal_entry, journal_id, journal_date, t_license_no, journal_title, journal_moods) VALUES ('${userid}', '${journalText}', '${'j'+jid}', 
+    '${entryDate}', '${'t_license_'+userid}', '${journalTitle}', '${mood}')`;
+    db.query(sql, function(err, result){
+        if (err) {
+            console.error("Error inserting into MySQL:", err); // Send error response and STOP further execution
+            return res.status(500).send({ message: 'Database insertion failed' });
+        }
+        console.log("Values inserted:", result); // Send success response
+    })
+})
 app.get('/journal', (req, res) => {
     const user_id = req.query.user_id; // Get user_id from query parameters
 
@@ -151,8 +163,28 @@ app.get('/journal', (req, res) => {
         res.status(200).json(results);
     });
 });
-
-
+app.get('/stats', (req, res) => {
+    const sqlQuery = `
+      SELECT 
+        journal_id, 
+        journal_entry, 
+        journal_title, 
+        journal_date, 
+        journal_mood 
+      FROM journal 
+      ORDER BY journal_date;
+    `;
+  
+    db.query(sqlQuery, (err, result) => {
+      if (err) {
+        console.error('Error fetching data:', err);
+        res.status(500).send('Error fetching data');
+      } else {
+        res.json(result);
+      }
+    });
+  });
+  
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
