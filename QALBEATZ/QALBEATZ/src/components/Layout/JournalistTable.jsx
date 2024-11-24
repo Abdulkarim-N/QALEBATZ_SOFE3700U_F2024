@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export default function JournalistTable({ articles = [] }) {
   return (
     <div className="overflow-x-auto rounded-lg bg-neutral-900 shadow-md">
@@ -20,7 +18,7 @@ export default function JournalistTable({ articles = [] }) {
               key={article.journal_id}
               className={`${
                 index % 2 === 0 ? "bg-neutral-900" : "bg-neutral-800"
-              } hover:bg-neutral-700`}
+              } hover:bg-neutral-700 transition`}
             >
               <td className="px-4 py-3 text-center text-gray-400">{index + 1}</td>
               <td className="px-4 py-3 text-gray-200">
@@ -37,12 +35,12 @@ export default function JournalistTable({ articles = [] }) {
                 </span>
               </td>
               <td className="px-4 py-3 text-center">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                <button className="bg-neutral-800 text-gray-300 px-4 py-2 rounded-md hover:bg-neutral-700 focus:ring-2 focus:ring-neutral-500 focus:outline-none transition duration-300 ease-in-out shadow-sm">
                   Update
                 </button>
               </td>
               <td className="px-4 py-3 text-center">
-                <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition">
+                <button className="bg-neutral-800 text-red-300 px-4 py-2 rounded-md hover:text-red-500 hover:bg-neutral-700 focus:ring-2 focus:ring-red-500 focus:outline-none transition duration-300 ease-in-out shadow-sm">
                   Delete
                 </button>
               </td>
