@@ -67,7 +67,7 @@ sub_type enum('free', 'premium', 'student'),
 price double,
 duration datetime,
 Primary key (sub_id)
-);*/
+);
 Create table user_playlist(
 user_id int,
 song_id varchar(40),
