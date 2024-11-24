@@ -32,10 +32,30 @@ export default function Signup() {
   const navigate = useNavigate();
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+  const [email, setemail] = useState("");
+  const [flag, setflag] = useState(false);
+  const [flag2, setflag2] = useState(false);
   const userinfo = {
     username: username,
-    password: password
+    password: password,
+    email: email
   };
+  const verify = (response) =>{
+    console.log(response.message);
+    if(response.message == 'Username already exists!'){
+      setflag2(true);
+      console.log('failed');
+    }
+    else if(response.message == 'Username successful'){
+      console.log('success');
+      setflag(false);
+      axios.post('http://localhost:3000/signup',{userinfo}).then(response => (console.log(response.data))).catch(err => console.log(err))
+      setusername('');
+      setpassword('');
+      setemail('');
+      navigate(routes.HOME);
+    }
+  }
   return (
     <div className="min-h-screen flex flex-col items-stretch font-body bg-black md:bg-gradient-to-b md:from-zinc-900 md:to-black">
       <header className="py-12 md:py-8 px-8 md:px-12 md:mb-8 bg-black">
@@ -68,16 +88,29 @@ export default function Signup() {
           onSubmit={(e) => {
             e.preventDefault();
             console.log(userinfo);
-            navigate(routes.HOME);
-            axios.post('http://localhost:3000/signup',{userinfo}).then(response => (console.log(response.data)))
-            .catch(err => console.log(err))
+            if(userinfo.username == '' || userinfo.password == '' || userinfo.email == '' || !(/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(userinfo.email))){
+              setflag(true);
+              return;
+            }
+            setusername('');
+            setpassword('');
+            setemail('');
+            axios.post('http://localhost:3000/signup2',{userinfo}).then(response => (verify(response.data))).catch(err => console.log(err))
           }}
         >
+           <FormInput
+            type="text"
+            id="email"
+            name="email"
+            hintText="Email"
+            setParentValue={setemail}
+          />
+
           <FormInput
             type="text"
             id="username"
             name="username"
-            hintText="Email or username"
+            hintText="Username"
             setParentValue={setusername}
           />
 
@@ -93,7 +126,8 @@ export default function Signup() {
             Sign Up
           </PrimaryButton>
         </form>
-
+          {flag ? <h1 style={{color:"red", textAlign:"center"}}>please enter valid values for all fields</h1> : undefined}
+          {flag2 ? <h1 style={{color:"red", textAlign:"center"}}>username already exists</h1> : undefined}
         <div className="flex flex-col gap-5 items-center text-center">
           <Link to="#" text="Forgot your password?" />
 

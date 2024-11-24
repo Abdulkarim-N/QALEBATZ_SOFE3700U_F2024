@@ -12,6 +12,12 @@ import { useNavigate } from "react-router-dom";
 import { routes } from "../shared/routes";
 import { useState } from 'react';
 import axios from 'axios';
+import { user_id } from '../shared/routes';
+import { u_id } from '../components/UserNavbar';
+import {us_id } from '../components/UserSideMenu';
+import {username_id} from '../routes/journal';
+import {usr_id} from '../routes/userhome';
+
 const authProviders = [
   {
     icon: faGoogle,
@@ -31,21 +37,36 @@ export default function Login() {
   const navigate = useNavigate();
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
-  const [response, setresponse] = useState("");
   const userinfo = {
     username: username,
     password: password
   };
-  const verify = (response) =>{
+  const [flag, setflag] = useState(false);
+  const verify = async(response) =>{
+    let userid;
     console.log(response.message);
     if(response.message == 'Login successful!'){
-      console.log('umer is gay');
-      navigate(routes.LOGGED);
-      //route to loggin in page
+      try{
+        const axiosres = await axios.get('http://localhost:3000/userid',{params: {username: userinfo.username}})
+        userid = axiosres.data[0].user_id;
+        //localStorage.setItem('userid',userid);
+        //user_id(userid)
+        console.log(userid)
+        user_id(userid);
+        u_id(userid);
+        us_id(userid);
+        username_id(userid);
+        usr_id(userid)
+        const loggedRoute = routes.LOGGED.replace(':userid',userid)
+        navigate(loggedRoute)
+        //navigate(routes.LOGGED)
+    }
+    catch(error){
+      console.log('error')
+    }
     }
     else if(response.message == 'retrieval failed'){
-      console.log('umer is fag');
-      //route to idk
+      setflag(true);
     }
   }
   return (
@@ -61,7 +82,6 @@ export default function Login() {
         <h1 className="text-3xl md:text-[2.9rem] md:text-center md:mb-7 font-extrabold">
           Log in to QALBEATZ
         </h1>
-
         <div className="flex flex-col gap-2 md:px-[5.5rem]">
           {authProviders.map((provider) => (
             <ThirdPartyAuthButton
@@ -78,6 +98,7 @@ export default function Login() {
           className="flex flex-col gap-5 md:px-[5.5rem]"
           onSubmit={(e) => {
             e.preventDefault();
+            console.log(userinfo);
             axios.post('http://localhost:3000/login',{userinfo}).then(response => (verify(response.data)))
             .catch(err => console.log(err))
           }}
@@ -86,7 +107,7 @@ export default function Login() {
             type="text"
             id="username"
             name="username"
-            hintText="Email or username"
+            hintText="Username or Email"
             setParentValue={setusername}
           />
 
@@ -102,7 +123,7 @@ export default function Login() {
             Log In
           </PrimaryButton>
         </form>
-
+          {flag ? <h1 style={{color: "red",textAlign: "center"}}>Incorrect username or password</h1> : undefined}
         <div className="flex flex-col gap-5 items-center text-center">
           <Link to="#" text="Forgot your password?" />
 

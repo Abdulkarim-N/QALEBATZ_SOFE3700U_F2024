@@ -4,7 +4,11 @@ import FlatButton from "./Buttons/FlatButton";
 import SecondaryButton from "./Buttons/SecondaryButton";
 import { routes } from "../shared/routes";
 import useSearch from "../hooks/useSearch";
-
+let uid = '';
+export const u_id = (userid) => {
+  uid = userid
+  console.log(uid + 'in button file')
+}
 export default function Navbar() {
   const [search, setSearch] = useState("");
   const { searchResults, isLoading, error } = useSearch(search, "track");
@@ -34,7 +38,7 @@ export default function Navbar() {
         
         <li>
           <FlatButton
-            href={routes.JOURNAL}
+            href={routes.JOURNAL.replace(':userid',uid)}
             className="text-neutral-400 hover:text-white font-bold hover:scale-105"
           >
             Journal

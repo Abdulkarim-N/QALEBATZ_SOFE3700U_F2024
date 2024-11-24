@@ -4,7 +4,11 @@ import SkeletonLoader from "../components/Loader/SkeletonLoader";
 import useFeaturedPlaylists from "../hooks/useFeaturedPlaylists";
 import useChillPlaylists from "../hooks/useChillPlaylists";
 import { routes } from "../shared/routes";
-
+let uid = '';
+export const usr_id = (userid) => {
+  uid = userid
+  console.log(uid + 'in button file')
+}
 export default function userHome() {
   const featuredPlaylists = useFeaturedPlaylists(6);
   const chillPlaylists = useChillPlaylists(5);
@@ -18,7 +22,7 @@ export default function userHome() {
       ) : (
         <Section heading="Spotify Playlists">
           <MediaGrid
-            mediaPageRoute={routes.USERPLAYLIST}
+            mediaPageRoute={routes.USERPLAYLIST.replace(':userid', uid)}
             media={featuredPlaylists ? featuredPlaylists.items : null}
           />
         </Section>
@@ -29,7 +33,7 @@ export default function userHome() {
       ) : (
         <Section heading="I'm Just A Chill Guy">
           <MediaGrid
-            mediaPageRoute={routes.USERPLAYLIST}
+            mediaPageRoute={routes.USERPLAYLIST.replace(':userid', uid)}
             media={chillPlaylists ? chillPlaylists.items : null}
           />
         </Section>

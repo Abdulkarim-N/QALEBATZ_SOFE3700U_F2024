@@ -1,14 +1,21 @@
 const base = "/react-qalbeatz";
-
+//const userid = localStorage.getItem('userid')
+let userid = ''
+export const user_id = (uid) => {
+  console.log("Received variable:", uid);
+  userid = uid;
+  console.log(userid)
+};
+export const getloggedRoute = (userid) => `${base}/user/${userid}`
 export const routes = {
   HOME: base,
   LOGIN: `${base}/login`,
   SEARCH: `${base}/`,
   PLAYLIST: `${base}/playlist`,
-  USERPLAYLIST: `${base}/user/playlist`,
+  USERPLAYLIST: `${base}/user/:userid/playlist`,
   SIGNUP: `${base}/signup`,
-  LOGGED: `${base}/user`,
-  JOURNAL: `${base}/user/journal`,
+  LOGGED: `${base}/user/:userid`,
+  JOURNAL: `${base}/user/:userid/journal`
 };
 
 export const paths = {
@@ -19,6 +26,6 @@ export const paths = {
   SIGNUP: routes.SIGNUP,
   LOGGED: routes.LOGGED,
   USERPLAYLIST: `${routes.LOGGED}/playlist/:playlistId`,
-  JOURNAL: `${routes.LOGGED}/journal`,
+  JOURNAL: `${routes.LOGGED}/journal`
 };
 

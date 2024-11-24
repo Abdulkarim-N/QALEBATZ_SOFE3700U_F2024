@@ -23,6 +23,10 @@ const router = createBrowserRouter([
     path: paths.SIGNUP,
     element: <Signup />,
   },
+  {
+    path: paths.JOURNAL,
+    element: <Journal />,
+  },
 
   {
     path: paths.LOGGED,
@@ -39,10 +43,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: paths.JOURNAL,
-    element: <Journal />,
-  },
+  
   {
     path: paths.HOME,
     element: <Root />,

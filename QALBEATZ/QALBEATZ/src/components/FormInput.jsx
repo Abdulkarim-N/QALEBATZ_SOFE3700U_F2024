@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function FormInput({ id, name, type, hintText, setParentValue }) {
+export default function FormInput({ id, name, type, hintText, setParentValue}) {
   const [value, setValue] = useState("");
 
   return (
@@ -14,7 +14,7 @@ export default function FormInput({ id, name, type, hintText, setParentValue }) 
         id={id}
         placeholder={hintText}
         value={value}
-        onInput={(e) => {
+        onChange={(e) => {
           setValue(e.target.value);
           setParentValue(e.target.value);
           console.log(value)
