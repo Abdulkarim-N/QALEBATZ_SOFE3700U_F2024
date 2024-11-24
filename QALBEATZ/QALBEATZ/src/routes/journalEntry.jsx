@@ -16,7 +16,7 @@ export default function Journalist() {
   const [journalEntries, setJournalEntries] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  
   useEffect(() => {
     const fetchJournalEntries = async () => {
       try {
@@ -24,6 +24,7 @@ export default function Journalist() {
         const response = await axios.get(`http://localhost:3000/journal`, {
           params: { user_id: userid },
         });
+        console.log(response.data)
         setJournalEntries(response.data);
       } catch (err) {
         console.error("Error fetching journal entries:", err);
@@ -37,6 +38,21 @@ export default function Journalist() {
       fetchJournalEntries();
     }
   }, [userid]); // Only triggers when `userid` changes
+  const handleupdate = (journal_id) => {
+    console.log("Update row with ID:", journal_id);
+    // Add your update logic here
+  };
+
+  const handledelete = async(journal_id, bid, jid) => {
+    console.log(bid)
+    console.log("Delete row with ID:", journal_id);
+    console.log(jid)
+    console.log(journalEntries)
+    // Filter out the deleted article
+    const updatedArticles = journalEntries.splice(!journal_id,journalEntries.length-1);
+    setJournalEntries(updatedArticles);
+    const axdel = await axios.delete('http://localhost:3000/deljournal', { params: { jid: jid }});
+  };
 
   if (loading) return <DotLoader />;
   if (error) return <div>Error: {error}</div>;
@@ -44,7 +60,7 @@ export default function Journalist() {
   return (
 <div className="pt-16"> {/* Assuming the navbar height is 4rem */}
   <JournalHeader className="mb-6" journalEntries={journalEntries} />
-  <JournalistTable articles={journalEntries} />
+  <JournalistTable articles={journalEntries} handleupdate={handleupdate} handledelete={handledelete} />
 </div>
   );
 }

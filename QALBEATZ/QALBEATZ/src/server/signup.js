@@ -57,90 +57,102 @@ app.post('/signup', (req, res) => { //POST operations
 });
 app.post('/login', (req, res) => { //GET OPERATIONS
     const { username, password } = req.body.userinfo;
-    if(/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(username)){
+    if (/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(username)) {
         db.query(`SELECT user_password FROM user WHERE email = '${username}'`, function (err, result, fields) {
-            if (err){ 
-                console.log("error retrieving data");
-                return res.status(500).send({message: "retrieval failed"})
-            }
-            if(result.length > 0){
-                const dbPassword = result[0].user_password;
-                if (dbPassword == password) {
-                    res.status(200).send({message: "Login successful!"});
-                } 
-                else if(dbPassword != password){
-                    return res.status(201).send({message: "retrieval failed"})
-                }
-            }
-            else{
-                return res.status(201).send({message: "retrieval failed"})
-            }
-        });     
-    }
-    else{
-        db.query(`SELECT user_password FROM user WHERE username = '${username}'`, function (err, result, fields) {
-            if (err){ 
-                console.log("error retrieving data");
-                return res.status(500).send({message: "retrieval failed"})
-            }
-            if(result.length > 0){
-                const dbPassword = result[0].user_password;
-                if (dbPassword == password) {
-                    res.status(200).send({message: "Login successful!"});
-                } 
-                else if(dbPassword != password){
-                    return res.status(201).send({message: "retrieval failed"})
-                }
-            }
-            else{
-                return res.status(201).send({message: "retrieval failed"})
-            }
-        });
-    }     
-    });
-app.post('/signup2', (req, res) => { //Checking to ensure username does NOT match pre-existing username
-    const { username, password } = req.body.userinfo;
-        db.query(`SELECT COUNT(*) AS user_exists FROM user WHERE username = '${username}'`, function (err, result, fields) {
             if (err) {
-                console.log("error retrieving data"); 3
+                console.log("error retrieving data");
                 return res.status(500).send({ message: "retrieval failed" })
             }
-            const dbUsername = result[0].user_exists;
-            if (dbUsername > 0) {
-                res.status(200).send({ message: "Username already exists!" });
+            if (result.length > 0) {
+                const dbPassword = result[0].user_password;
+                if (dbPassword == password) {
+                    res.status(200).send({ message: "Login successful!" });
+                }
+                else if (dbPassword != password) {
+                    return res.status(201).send({ message: "retrieval failed" })
+                }
             }
-            else if (dbUsername == 0) {
-                return res.status(201).send({ message: "Username successful" })
+            else {
+                return res.status(201).send({ message: "retrieval failed" })
             }
         });
+    }
+    else {
+        db.query(`SELECT user_password FROM user WHERE username = '${username}'`, function (err, result, fields) {
+            if (err) {
+                console.log("error retrieving data");
+                return res.status(500).send({ message: "retrieval failed" })
+            }
+            if (result.length > 0) {
+                const dbPassword = result[0].user_password;
+                if (dbPassword == password) {
+                    res.status(200).send({ message: "Login successful!" });
+                }
+                else if (dbPassword != password) {
+                    return res.status(201).send({ message: "retrieval failed" })
+                }
+            }
+            else {
+                return res.status(201).send({ message: "retrieval failed" })
+            }
+        });
+    }
+});
+app.post('/signup2', (req, res) => { //Checking to ensure username does NOT match pre-existing username
+    const { username, password } = req.body.userinfo;
+    db.query(`SELECT COUNT(*) AS user_exists FROM user WHERE username = '${username}'`, function (err, result, fields) {
+        if (err) {
+            console.log("error retrieving data"); 3
+            return res.status(500).send({ message: "retrieval failed" })
+        }
+        const dbUsername = result[0].user_exists;
+        if (dbUsername > 0) {
+            res.status(200).send({ message: "Username already exists!" });
+        }
+        else if (dbUsername == 0) {
+            return res.status(201).send({ message: "Username successful" })
+        }
     });
+});
 app.get('/userid', (req, res) => {
     const username = req.query.username;
     console.log(username);
     let sql = `SELECT user_id FROM user WHERE username = '${username}'`;
-    db.query(sql, function (err, result){
+    db.query(sql, function (err, result) {
         console.log(result)
-        if(!err){
+        if (!err) {
             res.send(result);
         }
-        else{
+        else {
             console.log(err);
         }
     })
 })
 app.post('/journalpost', (req, res) => {
-    const {journalTitle, journalText, entryDate, mood, userid} = req.body.journalEntry;
-    let jid = Math.floor(Math.random() * 1000);
-    const sql = `INSERT INTO journal (user_id, journal_entry, journal_id, journal_date, t_license_no, journal_title, journal_moods) VALUES ('${userid}', '${journalText}', '${'j'+jid}', 
-    '${entryDate}', '${'t_license_'+userid}', '${journalTitle}', '${mood}')`;
-    db.query(sql, function(err, result){
-        if (err) {
-            console.error("Error inserting into MySQL:", err); // Send error response and STOP further execution
-            return res.status(500).send({ message: 'Database insertion failed' });
+    const { journalTitle, journalText, entryDate, mood, userid } = req.body.journalEntry;
+    const jid = Math.floor(Math.random() * 1000); // Generate a random journal ID
+
+    // Insert query using default value for t_license_no
+    const sql = `
+        INSERT INTO journal (user_id, journal_entry, journal_id, journal_date, t_license_no, journal_title, journal_mood)
+        VALUES (?, ?, ?, ?, DEFAULT, ?, ?)
+    `;
+
+    db.query(
+        sql,
+        [userid, journalText, jid, entryDate, journalTitle, mood],
+        (err, result) => {
+            if (err) {
+                console.error("Error inserting into MySQL:", err); // Send error response and stop further execution
+                return res.status(500).send({ message: 'Database insertion failed' });
+            }
+            console.log("Values inserted:", result); // Send success response
+            res.status(200).send({ message: 'Journal entry created successfully!' });
         }
-        console.log("Values inserted:", result); // Send success response
-    })
-})
+    );
+});
+
+// GET operation for fetching journal entries
 app.get('/journal', (req, res) => {
     const user_id = req.query.user_id; // Get user_id from query parameters
 
@@ -163,21 +175,33 @@ app.get('/journal', (req, res) => {
         res.status(200).json(results);
     });
 });
+
 app.get('/stats', (req, res) => {
 
-    const sqlQuery = `SELECT * FROM journal ORDER BY journal_date`;
+    const sqlQuery = `SELECT * FROM journal ORDER BY journal_date;`;
 
-  
     db.query(sqlQuery, (err, result) => {
-      if (err) {
-        console.error('Error fetching data:', err);
-        res.status(500).send('Error fetching data');
-      } else {
-        res.json(result);
-      }
+        if (err) {
+            console.error('Error fetching data:', err);
+            res.status(500).send('Error fetching data');
+        } else {
+            res.json(result);
+        }
     });
-  });
-  
+});
+
+app.delete('/deljournal', (req, res) => {
+    const journal_id = req.query.jid;
+    console.log(journal_id)
+    const sql = `DELETE FROM journal WHERE journal_id = ?`;
+    db.query(sql, [journal_id], (err, result) => {
+        if (err) {
+            console.error("Error deleting data:", err);
+            return res.status(500).send({ message: "Deletion failed" });
+        }
+        res.status(200).send({ message: "Journal entry deleted successfully" });
+    });
+})
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
