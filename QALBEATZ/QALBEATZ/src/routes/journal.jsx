@@ -13,12 +13,16 @@ export const username_id = (userid) => {
 export default function JournalEntry() {
   const navigate = useNavigate();
   const { userid } = useParams(); // Use this if `userid` is passed in the route
+  const [journalTitle, setJournalTitle] = useState(""); // State for journal title
   const [journalText, setJournalText] = useState("");
   const [entryDate, setEntryDate] = useState("");
+  const [mood, setMood] = useState(""); // State for mood
 
   const journalEntry = {
+    journalTitle,
     journalText,
     entryDate,
+    mood,
   };
 
   return (
@@ -49,6 +53,16 @@ export default function JournalEntry() {
               .catch(err => console.log(err));
           }}
         >
+          <label className="text-gray-400">Journal Title</label>
+          <input
+            type="text"
+            value={journalTitle}
+            onChange={(e) => setJournalTitle(e.target.value)}
+            placeholder="Enter your journal title"
+            className="p-2 border border-gray-300 rounded bg-black text-white"
+            required
+          />
+
           <label className="text-gray-400">Enter Date of Journal</label>
           <input
             type="date"
@@ -67,10 +81,34 @@ export default function JournalEntry() {
             required
           />
 
+          <label className="text-gray-400">Mood</label>
+          <select
+            value={mood}
+            onChange={(e) => setMood(e.target.value)}
+            className="p-2 border border-gray-300 rounded bg-black text-white"
+            required
+          >
+            <option value="" disabled>Select your mood (1-10)</option>
+            {[...Array(10)].map((_, index) => (
+              <option key={index} value={index + 1}>{index + 1}</option>
+            ))}
+          </select>
+
           <PrimaryButton type="submit" className="mt-5" style={{ color: "#a1051c" }}>
-            Save Entry
+            Save Entry  
           </PrimaryButton>
         </form>
+
+        <div className="flex flex-col gap-5 items-center text-center">
+          <hr className="hidden md:block w-full border-t-[1px] mb-6 border-zinc-800" />
+
+          <div className="flex flex-col gap-1 md:gap-2 md:flex-row">
+            <p className="text-zinc-400">Want to go back?</p>
+            <a href={routes.LOGGED} className="text-red-500 hover:underline">
+              Return to Home
+            </a>
+          </div>
+        </div>
       </main>
     </div>
   );
