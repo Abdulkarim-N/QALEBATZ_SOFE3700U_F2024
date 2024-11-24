@@ -20,6 +20,7 @@ import {username_id} from '../routes/journal';
 import {usr_id} from '../routes/userhome';
 import {Usr_id} from '../routes/journalEntry';
 import {uSER_id} from '../components/UserSideMenu';
+import {u_id2} from '../components/UserLibrary';
 
 
 
@@ -62,6 +63,7 @@ export default function Login() {
         usER_id(userid);
         user_id(userid);
         u_id(userid);
+        u_id2(userid);
         us_id(userid);
         username_id(userid);
         usr_id(userid)

@@ -10,8 +10,8 @@ app.options('/', cors()); // Allow preflight requests
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'affan2003',
-    database: 'qalbeatz',
+    password: '12345',
+    database: 'proj',
 })
 db.connect((err) => {
     if (err) throw err;
@@ -163,8 +163,28 @@ app.get('/journal', (req, res) => {
         res.status(200).json(results);
     });
 });
-
-
+app.get('/stats', (req, res) => {
+    const sqlQuery = `
+      SELECT 
+        journal_id, 
+        journal_entry, 
+        journal_title, 
+        journal_date, 
+        journal_mood 
+      FROM journal 
+      ORDER BY journal_date;
+    `;
+  
+    db.query(sqlQuery, (err, result) => {
+      if (err) {
+        console.error('Error fetching data:', err);
+        res.status(500).send('Error fetching data');
+      } else {
+        res.json(result);
+      }
+    });
+  });
+  
 app.listen(3000, () => {
     console.log('Server running on http://localhost:3000');
 });
