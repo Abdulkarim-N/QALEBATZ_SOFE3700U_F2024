@@ -56,7 +56,7 @@ export default function Stats() {
       }).format(date);
     });
 
-    const moods = data.map((entry) => entry.journal_mood);
+    const mood = data.map((entry) => entry.journal_mood);
 
     // Create a new Chart.js instance
     chartInstance.current = new Chart(ctx, {

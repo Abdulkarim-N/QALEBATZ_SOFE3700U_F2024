@@ -4,8 +4,8 @@ import SkeletonLoader from "../components/Loader/SkeletonLoader";
 import React from 'react';
 import { useParams } from "react-router-dom";  // Import useParams to access URL params
 import { routes } from "../shared/routes";
-import useFeaturedPlaylists from "../hooks/useFeaturedPlaylists";
-import useChillPlaylists from "../hooks/useChillPlaylists";
+import useAnimePlaylist from "../hooks/useWorkoutPlaylist";
+import usePodcastPlaylist from "../hooks/usePartyPlaylist";
 
 let userid = '';  // Declare userid globally in the file
 export const user_id = (uid) => {
@@ -16,31 +16,31 @@ export const user_id = (uid) => {
 
 export default function UserSpecificPlaylist() {
   const { userid } = useParams(); // Access the user ID from the route params
-  const featuredPlaylists = useFeaturedPlaylists(6);
-  const chillPlaylists = useChillPlaylists(5);
+  const AnimePlaylist = useAnimePlaylist(6);
+  const PodcastPlaylist = usePodcastPlaylist(5);
 
   return (
     <div className="px-7 mt-20">
       <h1 className="sr-only">UserHome</h1>
 
-      {!featuredPlaylists ? (
+      {!AnimePlaylist ? (
         <SkeletonLoader />
       ) : (
-        <Section heading="Spotify Playlists">
+        <Section heading="Feeling a workout?">
           <MediaGrid
             mediaPageRoute={routes.USERPLAYLIST.replace(':userid', userid)} // Dynamically replace :userid
-            media={featuredPlaylists ? featuredPlaylists.items : null}
+            media={AnimePlaylist ? AnimePlaylist.items : null}
           />
         </Section>
       )}
 
-      {!chillPlaylists ? (
+      {!PodcastPlaylist ? (
         <SkeletonLoader />
       ) : (
-        <Section heading="I'm Just A Chill Guy">
+        <Section heading="It's time to party!">
           <MediaGrid
             mediaPageRoute={routes.USERPLAYLIST.replace(':userid', userid)} // Dynamically replace :userid
-            media={chillPlaylists ? chillPlaylists.items : null}
+            media={PodcastPlaylist ? PodcastPlaylist.items : null}
           />
         </Section>
       )}
