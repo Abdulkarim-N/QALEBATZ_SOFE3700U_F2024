@@ -128,7 +128,19 @@ app.get('/userid', (req, res) => {
         }
     })
 })
-
+app.post('/journalpost', (req, res) => {
+    const {journalTitle, journalText, entryDate, mood, userid} = req.body.journalEntry;
+    let jid = Math.floor(Math.random() * 1000);
+    const sql = `INSERT INTO journal (user_id, journal_entry, journal_id, journal_date, t_license_no, journal_title, journal_moods) VALUES ('${userid}', '${journalText}', '${'j'+jid}', 
+    '${entryDate}', '${'t_license_'+userid}', '${journalTitle}', '${mood}')`;
+    db.query(sql, function(err, result){
+        if (err) {
+            console.error("Error inserting into MySQL:", err); // Send error response and STOP further execution
+            return res.status(500).send({ message: 'Database insertion failed' });
+        }
+        console.log("Values inserted:", result); // Send success response
+    })
+})
 app.get('/journal', (req, res) => {
     const user_id = req.query.user_id; // Get user_id from query parameters
 

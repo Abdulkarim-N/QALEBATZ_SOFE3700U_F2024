@@ -23,6 +23,7 @@ export default function JournalEntry() {
     journalText,
     entryDate,
     mood,
+    userid,
   };
 
   return (
@@ -45,10 +46,15 @@ export default function JournalEntry() {
           className="flex flex-col gap-5 md:px-[5.5rem]"
           onSubmit={(e) => {
             e.preventDefault();
+            journalEntry.journalTitle = journalTitle;
+            journalEntry.journalText = journalText;
+            journalEntry.entryDate = entryDate;
+            journalEntry.mood = mood;
+            journalEntry.userid = uid;
             console.log(journalEntry);
             navigate(routes.LOGGED.replace(':userid', uid)); // Ensure routes.LOGGED is correct
             axios
-              .post('http://localhost:3000/journal', { journalEntry })
+              .post('http://localhost:3000/journalpost', { journalEntry })
               .then(response => console.log(response.data))
               .catch(err => console.log(err));
           }}
