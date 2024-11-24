@@ -17,7 +17,8 @@ export const routes = {
   LOGGED: `${base}/user/:userid`,
   JOURNAL: `${base}/user/:userid/journal`,
   JOURNALIST: `${base}/user/:userid/journalist`,
-  STATS: `${base}/user/:userid/stats`
+  STATS: `${base}/user/:userid/stats`,
+  USERSPECIFICPLAYLIST: `${base}/user/:userid/specific_playlists`
 };
 
 export const paths = {
@@ -30,5 +31,6 @@ export const paths = {
   USERPLAYLIST: `${routes.LOGGED}/playlist/:playlistId`,
   JOURNAL: `${routes.LOGGED}/journal`,
   JOURNALIST: `${routes.LOGGED}/journalist`,
-  STATS: `${routes.LOGGED}/stats`
+  STATS: `${routes.LOGGED}/stats`,
+  USERSPECIFICPLAYLIST: `${routes.LOGGED}/specific_playlists`
 };

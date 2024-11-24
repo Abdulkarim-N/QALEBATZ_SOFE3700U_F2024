@@ -7,12 +7,21 @@ import VerticalCard from "./Cards/VerticalCard";
 import SecondaryButton from "./Buttons/SecondaryButton";
 import BorderedButton from "./Buttons/BorderedButton";
 import FlatButton from "./Buttons/FlatButton";
+import { paths, routes } from "../shared/routes";
+
+let uid = '';
+export const u_id2 = (userid) => {
+  uid = userid
+  console.log(uid + 'IN LIBRARY FILE')
+}
 
 export default function userSideLibrary() {
   return (
     <SectionContainer className="h-full justify-stretch items-stretch">
       <div className="relative flex justify-between items-center px-5 py-4 shadow-lg shadow-neutral-950">
-        <RoundedButton className="flex gap-3 items-center px-2 py-1 text-neutral-400 hover:text-white transition-colors duration-300">
+        <RoundedButton 
+        href={routes.USERSPECIFICPLAYLIST.replace(':userid',uid)}
+        className="flex gap-3 items-center px-2 py-1 text-neutral-400 hover:text-white transition-colors duration-300">
           <FontAwesomeIcon icon={faListDots} />
           Your Library
         </RoundedButton>
