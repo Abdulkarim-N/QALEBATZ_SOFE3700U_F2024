@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import JournalistTable from "../components/Layout/JournalistTable";
+import JournalHeader from "../components/MediaHeader/JournalHeader";
 import DotLoader from "../components/Loader/DotLoader";
 import axios from "axios";
 let uid = '';
@@ -41,10 +42,9 @@ export default function Journalist() {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div className="p-6 bg-neutral-900 text-white min-h-screen">
-      <div className="overflow-x-auto rounded-lg bg-neutral-900 shadow-md">
-        <JournalistTable articles={journalEntries} />
-      </div>
-    </div>
+<div className="pt-16"> {/* Assuming the navbar height is 4rem */}
+  <JournalHeader className="mb-6" journalEntries={journalEntries} />
+  <JournalistTable articles={journalEntries} />
+</div>
   );
 }
