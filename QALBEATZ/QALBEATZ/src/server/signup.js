@@ -10,8 +10,8 @@ app.options('/', cors()); // Allow preflight requests
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '12345',
-    database: 'proj',
+    password: 'affan2003',
+    database: 'qalbeatz',
 })
 db.connect((err) => {
     if (err) throw err;
@@ -170,7 +170,7 @@ app.get('/stats', (req, res) => {
         journal_entry, 
         journal_title, 
         journal_date, 
-        journal_mood 
+        journal_moods 
       FROM journal 
       ORDER BY journal_date;
     `;

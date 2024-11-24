@@ -13,7 +13,6 @@ export default function Stats() {
       try {
         const response = await axios.get("http://localhost:3000/stats");
         setJournalData(response.data);
-        renderChart(response.data);
       } catch (error) {
         console.error("Error fetching journal mood data:", error);
       }
@@ -22,8 +21,20 @@ export default function Stats() {
     fetchJournalMoods();
   }, []);
 
+  useEffect(() => {
+    if (journalData) {
+      renderChart(journalData);
+    }
+  }, [journalData]); // Render chart only after journalData is set
+
   const renderChart = (data) => {
-    const ctx = document.getElementById("journalMoodChart").getContext("2d");
+    const canvas = document.getElementById("journalMoodChart");
+    if (!canvas) {
+      console.error("Canvas element not found");
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
 
     const labels = data.map((entry) => {
       const date = new Date(entry.journal_date);
