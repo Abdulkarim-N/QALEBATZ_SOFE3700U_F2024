@@ -32,3 +32,7 @@
 
 3. Once the server starts, a local link will appear in the terminal. Open this link in your browser.
 4. Log in using one of the available accounts to begin using the application.
+
+## Tech Stack and Environment
+Node.Js, JavaScript, CSS, HTML, React, SQL
+Visual Studio, Sublime Text, Git
