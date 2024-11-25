@@ -32,7 +32,3 @@
 
 3. Once the server starts, a local link will appear in the terminal. Open this link in your browser.
 4. Log in using one of the available accounts to begin using the application.
-
----
-
-This README provides all the necessary setup and usage information to get started with QALBEATZ.
