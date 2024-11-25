@@ -34,5 +34,5 @@
 4. Log in using one of the available accounts to begin using the application.
 
 ## Tech Stack and Environment
-Tech Stack: Node.Js, JavaScript, CSS, HTML, React, SQL
-Environment: Visual Studio, Sublime Text, Git
+1. Tech Stack: Node.Js, JavaScript, CSS, HTML, React, SQL
+2. Environment: Visual Studio, Sublime Text, Git
