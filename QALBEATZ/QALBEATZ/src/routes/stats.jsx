@@ -7,7 +7,12 @@ Chart.register(...registerables);
 
 export default function Stats() {
   const [journalData, setJournalData] = useState(null);
-  const chartInstance = useRef(null); // Ref to store the Chart.js instance
+  const [entrySummary, setEntrySummary] = useState(""); // For "Most Entries" and "Least Entries"
+  const [entryCountInRange, setEntryCountInRange] = useState(null); // For date range count
+  const [startDate, setStartDate] = useState(""); // Start date for range
+  const [endDate, setEndDate] = useState(""); // End date for range
+  const [selectedOption, setSelectedOption] = useState(""); // For dropdown option (Most or Least Entries)
+  const chartInstance = useRef(null);
 
   useEffect(() => {
     async function fetchJournalMoods() {
@@ -26,9 +31,7 @@ export default function Stats() {
     if (journalData) {
       renderChart(journalData);
     }
-  }, [journalData]); // Render chart when journalData is updated
-
-
+  }, [journalData]);
 
   const renderChart = (data) => {
     const canvas = document.getElementById("journalMoodChart");
@@ -39,14 +42,10 @@ export default function Stats() {
 
     const ctx = canvas.getContext("2d");
 
-
-    // Destroy existing chart instance if it exists
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
 
-
-    // Prepare chart data
     const labels = data.map((entry) => {
       const date = new Date(entry.journal_date);
       return new Intl.DateTimeFormat("en-US", {
@@ -58,7 +57,6 @@ export default function Stats() {
 
     const mood = data.map((entry) => entry.journal_mood);
 
-    // Create a new Chart.js instance
     chartInstance.current = new Chart(ctx, {
       type: "line",
       data: {
@@ -132,6 +130,59 @@ export default function Stats() {
     }
   };
 
+  const calculateEntriesInRange = () => {
+    if (!startDate || !endDate) return;
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    const entriesInRange = journalData.filter((entry) => {
+      const entryDate = new Date(entry.journal_date);
+      return entryDate >= start && entryDate <= end;
+    });
+
+    setEntryCountInRange(entriesInRange.length);
+  };
+
+  const handleDropdownChange = (event) => {
+    const option = event.target.value;
+    setSelectedOption(option);
+    // Logic for handling Most Entries / Least Entries could go here
+    if (option === "Most Entries") {
+      // Calculate and show the month with the most entries
+      const { month, count } = calculateMonthWithMostEntries();
+      setEntrySummary(`Month with most entries: ${month} (${count} entries)`);
+    } else if (option === "Least Entries") {
+      // Calculate and show the month with the least entries
+      const { month, count } = calculateMonthWithLeastEntries();
+      setEntrySummary(`Month with least entries: ${month} (${count} entries)`);
+    }
+  };
+
+  // Logic to calculate the month with most entries
+  const calculateMonthWithMostEntries = () => {
+    const monthCount = {};
+    journalData.forEach((entry) => {
+      const month = new Date(entry.journal_date).toLocaleString("default", { month: "long" });
+      monthCount[month] = (monthCount[month] || 0) + 1;
+    });
+
+    const maxMonth = Object.keys(monthCount).reduce((a, b) => (monthCount[a] > monthCount[b] ? a : b));
+    return { month: maxMonth, count: monthCount[maxMonth] };
+  };
+
+  // Logic to calculate the month with least entries
+  const calculateMonthWithLeastEntries = () => {
+    const monthCount = {};
+    journalData.forEach((entry) => {
+      const month = new Date(entry.journal_date).toLocaleString("default", { month: "long" });
+      monthCount[month] = (monthCount[month] || 0) + 1;
+    });
+
+    const minMonth = Object.keys(monthCount).reduce((a, b) => (monthCount[a] < monthCount[b] ? a : b));
+    return { month: minMonth, count: monthCount[minMonth] };
+  };
+
   return (
     <div className="px-7 mt-20 relative">
       <div className="absolute top-5 right-5">
@@ -152,6 +203,53 @@ export default function Stats() {
           <p>Loading mood data...</p>
         )}
       </Section>
+
+      {/* Dropdown for Most/Least Entries */}
+      <div className="mt-5">
+        <h3 className="font-bold">Select Most or Least Entries</h3>
+        <select
+          value={selectedOption}
+          onChange={handleDropdownChange}
+          className="border p-2"
+        >
+          <option value="">Select Option</option>
+          <option value="Most Entries">Most Entries</option>
+          <option value="Least Entries">Least Entries</option>
+        </select>
+        {entrySummary && <p className="mt-2 font-semibold">{entrySummary}</p>}
+      </div>
+
+      {/* Date Range Input Section */}
+      <div className="mt-5">
+        <h3 className="font-bold">Find Journal Entries in Date Range</h3>
+        <label className="mr-2">Start Date:</label>
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          className="border p-1 mr-4"
+        />
+        <label className="mr-2">End Date:</label>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          className="border p-1 mr-4"
+        />
+        <button
+          onClick={calculateEntriesInRange}
+          className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+        >
+          Count Entries
+        </button>
+
+        {entryCountInRange !== null && (
+          <p className="mt-3">
+            Number of journal entries from {startDate} to {endDate}:{" "}
+            <span className="font-bold">{entryCountInRange}</span>
+          </p>
+        )}
+      </div>
     </div>
   );
 }
