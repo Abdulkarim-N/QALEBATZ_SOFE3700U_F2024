@@ -29,9 +29,9 @@
    ```bash
    npm run dev
    ```
-
-3. Once the server starts, a local link will appear in the terminal. Open this link in your browser.
-4. Log in using one of the available accounts to begin using the application.
+3. Navigate to `QALBEATZ\QALBEATZ\src\server` and run ```npm run dev``` to start the backend server.
+4. Once the server starts, a local link will appear in the terminal. Open this link in your browser.
+5. Log in using one of the available accounts to begin using the application.
 
 ## Tech Stack and Environment
 1. Tech Stack: Node.Js, JavaScript, CSS, HTML, React, SQL
